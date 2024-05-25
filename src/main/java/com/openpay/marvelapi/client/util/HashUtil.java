@@ -4,6 +4,13 @@ import java.math.BigInteger;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 
+/**
+ * Clase Util que puede contener diferentes algoritmos de hash
+ *
+ * @author Sergio de la Torre
+ * @version 1.0
+ * @since 2024-05-25
+ */
 public class HashUtil {
 
     /**

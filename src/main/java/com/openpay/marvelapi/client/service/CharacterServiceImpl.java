@@ -3,7 +3,7 @@ package com.openpay.marvelapi.client.service;
 import com.openpay.marvelapi.client.model.api.ResultResponse;
 import com.openpay.marvelapi.client.model.dto.CharacterResponse;
 import com.openpay.marvelapi.client.model.mapper.CharacterMapper;
-import com.openpay.marvelapi.client.util.Constants;
+import com.openpay.marvelapi.client.util.MarvelApiConstants;
 import com.openpay.marvelapi.client.util.HashUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -32,7 +32,7 @@ public class CharacterServiceImpl implements CharacterService{
     }
     @Override
     public CharacterResponse getCharacterById(Long characterId) {
-        String url = UriComponentsBuilder.fromHttpUrl(Constants.BASE_URL + Constants.CHARACTERS_URI + "/" + characterId)
+        String url = UriComponentsBuilder.fromHttpUrl(MarvelApiConstants.BASE_URL + MarvelApiConstants.CHARACTERS_URI + "/" + characterId)
                 .queryParam("ts", getTimeStamp())
                 .queryParam("apikey", publicKey)
                 .queryParam("hash", HashUtil.generateMD5Hash(getTimeStamp() + privateKey + publicKey))

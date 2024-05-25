@@ -6,6 +6,15 @@ import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+/**
+ * Componente para mapear objetos de respuesta de la API a un objeto Character con el formato y la información necesaria
+ *
+ * @author Sergio de la Torre
+ * @see ResultResponse
+ * @see CharacterResponse
+ * @version 1.0
+ * @since 2024-05-25
+ */
 @Component
 public class CharacterMapper {
 
