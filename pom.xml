@@ -10,7 +10,7 @@
 	</parent>
 	<groupId>com.openpay.marvelapi.client</groupId>
 	<artifactId>marvel-api-client</artifactId>
-	<version>0.0.1-SNAPSHOT</version>
+	<version>1.0.0</version>
 	<name>marvel-api-client</name>
 	<description>Marvel API Client</description>
 	<properties>
