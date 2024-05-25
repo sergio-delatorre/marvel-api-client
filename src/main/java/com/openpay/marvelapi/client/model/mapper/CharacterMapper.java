@@ -1,6 +1,6 @@
 package com.openpay.marvelapi.client.model.mapper;
 
-import com.openpay.marvelapi.client.model.api.ResultResponse;
+import com.openpay.marvelapi.client.model.api.ResultEntity;
 import com.openpay.marvelapi.client.model.dto.CharacterResponse;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,9 +10,9 @@ import org.springframework.stereotype.Component;
  * Componente para mapear objetos de respuesta de la API a un objeto Character con el formato y la información necesaria
  *
  * @author Sergio de la Torre
- * @see ResultResponse
+ * @see ResultEntity
  * @see CharacterResponse
- * @version 1.0
+ * @version 1.1
  * @since 2024-05-25
  */
 @Component
@@ -25,10 +25,10 @@ public class CharacterMapper {
         this.modelMapper = modelMapper;
     }
 
-    public CharacterResponse mapToCharacterResponse(ResultResponse resultResponse) {
-        CharacterResponse character = modelMapper.map(resultResponse.getData().getResults().get(0), CharacterResponse.class);
-        character.setImageUrl(resultResponse.getData().getResults().get(0).getThumbnail().getPath()
-                + "." + resultResponse.getData().getResults().get(0).getThumbnail().getExtension());
+    public CharacterResponse mapToCharacterResponse(ResultEntity resultEntity) {
+        CharacterResponse character = modelMapper.map(resultEntity, CharacterResponse.class);
+        character.setImageUrl(resultEntity.getThumbnail().getPath()
+                + "." + resultEntity.getThumbnail().getExtension());
         return character;
     }
 }

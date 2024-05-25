@@ -2,12 +2,14 @@ package com.openpay.marvelapi.client.service;
 
 import com.openpay.marvelapi.client.model.dto.CharacterResponse;
 
+import java.util.List;
+
 /**
  * Define los métodos asociados al consumo de los servicios de 'characters'
  *
  * @author Sergio de la Torre
  * @see CharacterResponse
- * @version 1.0
+ * @version 1.1
  * @since 2024-05-25
  */
 public interface CharacterService {
@@ -20,4 +22,11 @@ public interface CharacterService {
      * @return la respuesta con los detalles del personaje
      */
     CharacterResponse getCharacterById(Long characterId);
+
+    /**
+     * Obtiene la lista de personajes de cómic
+     *
+     * @return lista de personajes
+     */
+    List<CharacterResponse> getCharacters();
 }
