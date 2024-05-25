@@ -12,6 +12,8 @@ import org.springframework.web.client.RestTemplate;
 import org.springframework.web.util.UriComponentsBuilder;
 
 import java.time.Instant;
+import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class CharacterServiceImpl implements CharacterService{
@@ -32,18 +34,32 @@ public class CharacterServiceImpl implements CharacterService{
     }
     @Override
     public CharacterResponse getCharacterById(Long characterId) {
-        String url = UriComponentsBuilder.fromHttpUrl(MarvelApiConstants.BASE_URL + MarvelApiConstants.CHARACTERS_URI + "/" + characterId)
-                .queryParam("ts", getTimeStamp())
-                .queryParam("apikey", publicKey)
-                .queryParam("hash", HashUtil.generateMD5Hash(getTimeStamp() + privateKey + publicKey))
-                .toUriString();
+        String url = buildUri(MarvelApiConstants.BASE_URL + MarvelApiConstants.CHARACTERS_URI + "/" + characterId);
 
         ResultResponse response = restTemplate.getForObject(url, ResultResponse.class);
-        return characterMapper.mapToCharacterResponse(response);
+        return characterMapper.mapToCharacterResponse(response.getData().getResults().get(0));
+    }
+
+    @Override
+    public List<CharacterResponse> getCharacters() {
+        String url = buildUri(MarvelApiConstants.BASE_URL + MarvelApiConstants.CHARACTERS_URI);
+
+        ResultResponse response = restTemplate.getForObject(url, ResultResponse.class);
+        return response.getData().getResults().stream()
+                .map(characterMapper::mapToCharacterResponse)
+                .collect(Collectors.toList());
     }
 
     private String getTimeStamp() {
         return String.valueOf(Instant.now().getEpochSecond());
+    }
+
+    private String buildUri(String httpUrl){
+        return UriComponentsBuilder.fromHttpUrl(httpUrl)
+                .queryParam(MarvelApiConstants.QUERY_PARAM_TIME_STAMP, getTimeStamp())
+                .queryParam(MarvelApiConstants.QUERY_PARAM_API_KEY, publicKey)
+                .queryParam(MarvelApiConstants.QUERY_PARAM_HASH, HashUtil.generateMD5Hash(getTimeStamp() + privateKey + publicKey))
+                .toUriString();
     }
 
 }
