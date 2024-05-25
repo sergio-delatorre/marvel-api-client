@@ -1,6 +1,8 @@
 package com.openpay.marvelapi.client.service;
 
+import com.openpay.marvelapi.client.model.dto.CharacterResponse;
+
 public interface CharacterService {
 
-    String getCharacterById(String characterId);
+    CharacterResponse getCharacterById(Long characterId);
 }

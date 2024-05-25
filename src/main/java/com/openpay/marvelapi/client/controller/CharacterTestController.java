@@ -1,5 +1,6 @@
 package com.openpay.marvelapi.client.controller;
 
+import com.openpay.marvelapi.client.model.dto.CharacterResponse;
 import com.openpay.marvelapi.client.service.CharacterService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -19,7 +20,7 @@ public class CharacterTestController {
     }
 
     @GetMapping("/{characterId}")
-    public String getCharacterById(@PathVariable String characterId) {
+    public CharacterResponse getCharacterById(@PathVariable Long characterId) {
         return characterService.getCharacterById(characterId);
     }
 }

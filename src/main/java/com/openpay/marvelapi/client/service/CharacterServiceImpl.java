@@ -1,5 +1,8 @@
 package com.openpay.marvelapi.client.service;
 
+import com.openpay.marvelapi.client.model.api.ResultResponse;
+import com.openpay.marvelapi.client.model.dto.CharacterResponse;
+import com.openpay.marvelapi.client.model.mapper.CharacterMapper;
 import com.openpay.marvelapi.client.util.Constants;
 import com.openpay.marvelapi.client.util.HashUtil;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,20 +23,23 @@ public class CharacterServiceImpl implements CharacterService{
     private String privateKey;
 
     private final RestTemplate restTemplate;
+    private final CharacterMapper characterMapper;
 
     @Autowired
-    public CharacterServiceImpl(RestTemplate restTemplate) {
+    public CharacterServiceImpl(RestTemplate restTemplate, CharacterMapper characterMapper) {
         this.restTemplate = restTemplate;
+        this.characterMapper = characterMapper;
     }
     @Override
-    public String getCharacterById(String characterId) {
-        String url = UriComponentsBuilder.fromHttpUrl(Constants.BASE_URL + Constants.CHARACTERS_URI)
+    public CharacterResponse getCharacterById(Long characterId) {
+        String url = UriComponentsBuilder.fromHttpUrl(Constants.BASE_URL + Constants.CHARACTERS_URI + "/" + characterId)
                 .queryParam("ts", getTimeStamp())
                 .queryParam("apikey", publicKey)
                 .queryParam("hash", HashUtil.generateMD5Hash(getTimeStamp() + privateKey + publicKey))
                 .toUriString();
 
-        return restTemplate.getForObject(url, String.class);
+        ResultResponse response = restTemplate.getForObject(url, ResultResponse.class);
+        return characterMapper.mapToCharacterResponse(response);
     }
 
     private String getTimeStamp() {
